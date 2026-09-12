@@ -2,23 +2,20 @@
 
 ## Supported Versions
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 0.x     | :white_check_mark: |
+| Version | Supported |
+|---------|-----------|
+| 0.x     | Yes (active development) |
 
 ## Reporting a Vulnerability
 
-Please report security issues privately via GitHub Security Advisories or by emailing the maintainers.
+Please report security issues privately via GitHub Security Advisories or by contacting the maintainers.
 
-Do not open public issues for vulnerabilities.
+Do **not** open public issues for vulnerabilities that could be exploited.
 
-We aim to acknowledge reports within 72 hours and provide a remediation timeline.
+## Security Principles (X4)
 
-## Security Practices
-
-- Least-privilege defaults
-- No credentials in source
-- Dependabot enabled
-- Secret scanning enabled
-- Branch protection recommended for main
-- Agent tool execution must go through policy + sandbox layers (see x4-sandbox and x4-agents)
+- Least privilege for all agent actions
+- Explicit approval gates for high-risk operations
+- Immutable audit logs
+- No unrestricted production credentials for autonomous agents
+- Dependency and secret scanning in CI

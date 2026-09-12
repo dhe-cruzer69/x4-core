@@ -1,21 +1,17 @@
-# Roadmap
+# x4-core Roadmap
 
-## v0.1.0 (current)
-- Core package skeleton
-- Config, logger, events, basic plugin interface
-- Documentation baseline
+## v0.1 — Foundation
+- [ ] Core config / logger / events packages
+- [ ] Permission model
+- [ ] Plugin registry
+- [ ] Basic CI + tests
+- [ ] Public API sketch
 
-## v0.2.0
-- Stable public API
-- Telemetry hooks
-- Permission primitives
-- First integration tests with x4-ai and x4-agents
-
-## v0.3.0
-- Semantic versioning guarantees
-- Adapter contracts for memory, MCP, tools
-- Benchmarks
+## v0.2
+- [ ] Telemetry adapters
+- [ ] Schema validation helpers
+- [ ] Examples
 
 ## Later
-- Multi-language bindings (TypeScript, Go)
-- Formal verification of policy engine
+- [ ] Multi-language SDK bindings
+- [ ] Performance benchmarks

@@ -2,58 +2,44 @@
 
 **Core runtime and shared infrastructure for the X4 open-source ecosystem.**
 
-Provider-agnostic primitives used by every X4 project: configuration, logging, events, errors, telemetry, authentication, authorization, permissions, plugins, schemas and adapters.
+Provides the foundational primitives used by every other X4 project:
+
+- Configuration
+- Structured logging
+- Event bus
+- Telemetry
+- Authentication / Authorization primitives
+- Permission model
+- Plugin system
+- Shared schemas & adapters
 
 ## Status
 
-Early foundation (v0.1.0). Stable API surface is the current goal.
+Early foundation (v0.1). Architecture and public API are stabilizing.
 
-## Features
-
-- Type-safe configuration
-- Structured logging + telemetry
-- Event bus
-- Plugin system
-- Permission and policy primitives
-- Schema validation helpers
-- Clean adapter interfaces for AI, memory, MCP and tools
-
-## Quick Start
-
-```bash
-pip install -e .
-# or
-npm install @x4/core
-```
+## Quick start (planned)
 
 ```python
-from x4_core import config, logger, events
+from x4.core import X4
 
-cfg = config.load()
-log = logger.get("x4.core")
-bus = events.EventBus()
+x4 = X4()
+x4.config.load()
+x4.logger.info("agent started")
+x4.events.emit("task.created", {"task_id": "123"})
+x4.permissions.check(actor="agent", action="filesystem.write")
 ```
 
-## Architecture
+## Related
 
-See [ARCHITECTURE.md](ARCHITECTURE.md).
-
-## Roadmap
-
-See [ROADMAP.md](ROADMAP.md).
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Security
-
-See [SECURITY.md](SECURITY.md).
+- [x4-agents](https://github.com/dhe-cruzer69/x4-agents) — flagship agent runtime
+- [x4-ai](https://github.com/dhe-cruzer69/x4-ai)
+- [x4-memory](https://github.com/dhe-cruzer69/x4-memory)
+- [x4-sandbox](https://github.com/dhe-cruzer69/x4-sandbox)
 
 ## License
 
-Apache-2.0
+MIT (see LICENSE)
 
-## Support
+## Security
 
-[Sponsor X4](https://github.com/sponsors/dhe-cruzer69)
+See [SECURITY.md](SECURITY.md)
