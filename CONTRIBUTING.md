@@ -2,30 +2,26 @@
 
 Thank you for your interest in contributing.
 
-## Development setup
+## Getting Started
 
-```bash
-git clone https://github.com/dhe-cruzer69/x4-core.git
-cd x4-core
-python -m venv .venv
-source .venv/bin/activate
-pip install -e ".[dev]"
-```
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes with tests
+4. Open a pull request
 
-## Guidelines
+## Code Style
 
-- Keep the core free of agent-specific or provider-specific logic.
-- Prefer small, focused PRs.
-- Add tests for new public APIs.
-- Update docs and CHANGELOG for user-visible changes.
-- Follow the existing code style (ruff + mypy once configured).
+- Prefer clarity over cleverness
+- Add type hints / types
+- Keep public APIs small and documented
 
-## Pull requests
+## Pull Requests
 
-1. Fork and create a feature branch.
-2. Ensure tests and lint pass.
-3. Open a PR with a clear description of the change and motivation.
+- Include a clear description of the change
+- Reference related issues
+- Ensure CI passes
+- Update documentation if the public API changes
 
-## Code of Conduct
+## Security
 
-Be respectful. Harassment or discrimination is not tolerated.
+See SECURITY.md for vulnerability reporting.

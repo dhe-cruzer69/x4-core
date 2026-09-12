@@ -1,38 +1,28 @@
 # x4-core
 
-**Core runtime and shared infrastructure for the X4 open-source ecosystem.**
+**Core runtime and shared infrastructure for the X4 open-source ecosystem**
 
-Shared primitives used by every X4 project: configuration, logging, events, telemetry, authentication, permissions, plugins, and schemas.
+Provides the common primitives used by every X4 project: configuration, logging, events, telemetry, authentication, permissions, plugins and schemas.
 
 ## Status
 
-Early foundation (v0.1.0-dev). Designed to be the boring, reliable base layer so agent, AI, memory, MCP and sandbox projects do not re-implement infrastructure.
+Early foundation (v0.1). API is experimental and will evolve.
 
-## Goals
-
-- Type-safe configuration and validation
-- Structured logging + event bus
-- Permission and policy primitives
-- Plugin loading and lifecycle
-- Telemetry hooks (no vendor lock-in)
-- Zero business logic (agents live elsewhere)
-
-## Quick Start
+## Install (planned)
 
 ```bash
-pip install -e ".[dev]"   # once packaging is complete
+pip install x4-core
+# or
+npm install @x4/core
 ```
 
-```python
-from x4.core import Config, Logger, EventBus, Permission
+## Design Goals
 
-config = Config.load()
-logger = Logger(name="x4")
-bus = EventBus()
-
-bus.emit("runtime.started", {"version": "0.1.0"})
-logger.info("x4-core ready")
-```
+- Type-safe, minimal surface area
+- Zero heavy dependencies where possible
+- Explicit configuration over magic
+- Observability built-in
+- Plugin system for extension
 
 ## Architecture
 
@@ -41,34 +31,28 @@ x4-core/
 ├── packages/
 │   ├── config/
 │   ├── logging/
+│   ├── errors/
 │   ├── events/
 │   ├── telemetry/
 │   ├── auth/
 │   ├── permissions/
-│   ├── plugins/
-│   └── schemas/
+│   └── plugins/
+├── schemas/
 ├── adapters/
 ├── tests/
-├── examples/
 └── docs/
 ```
+
+## Related
+
+- [x4-agents](https://github.com/dhe-cruzer69/x4-agents) — consumes x4-core
+- [x4-ai](https://github.com/dhe-cruzer69/x4-ai)
+- [x4-memory](https://github.com/dhe-cruzer69/x4-memory)
+
+## License
+
+Apache-2.0 (or MIT — final decision pending)
 
 ## Security
 
 See [SECURITY.md](SECURITY.md). Report vulnerabilities privately.
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## License
-
-Apache-2.0 (see LICENSE).
-
-## Roadmap
-
-See [ROADMAP.md](ROADMAP.md).
-
----
-
-Part of the [X4 ecosystem](https://github.com/dhe-cruzer69) by ARIEX4Ops.
