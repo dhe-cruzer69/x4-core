@@ -2,43 +2,45 @@
 
 **Core runtime and shared infrastructure for the X4 open-source ecosystem.**
 
-Config • Logging • Events • Permissions • Plugins (coming)
+Config • Logging • Events • Telemetry • Auth • Permissions • Plugins • Schemas
 
-[![CI](https://github.com/dhe-cruzer69/x4-core/actions/workflows/ci.yml/badge.svg)](https://github.com/dhe-cruzer69/x4-core/actions)
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/status-v0.1-orange)](CHANGELOG.md)
 
-Part of [ARIEX4Ops / X4](https://github.com/dhe-cruzer69).
+Part of **[ARIEX4Ops / X4](https://github.com/dhe-cruzer69)** — secure AI agents, automation, and developer infrastructure.
 
-## Status
+---
 
-**v0.1.0** — Foundation with working primitives and tests.
+## Why x4-core exists
+
+Higher-level projects (agents, memory, sandbox, MCP) should not re-implement configuration, logging, events, or permission checks. x4-core provides the stable, typed, observable foundation they all share.
 
 ## Installation
 
 ```bash
-pip install -e ".[dev]"   # from source
+pip install x4-core
+# or for development
+pip install -e ".[dev]"
 ```
 
 ## 60-second example
 
-```bash
-python examples/hello_x4_core.py
-```
-
 ```python
-from x4 import Config, Logger, EventBus, Permission
+from x4.core import Config, Logger, EventBus, Permission
 
-config = Config.load({"env": "demo"})
-logger = Logger("demo")
+config = Config.load()
+logger = Logger("x4")
 events = EventBus()
-perm = Permission()
 
-perm.grant("agent", "filesystem.read", "./workspace")
-events.on("ready", lambda p: logger.info("ready", **p))
-events.emit("ready", {"version": "0.1.0"})
+logger.info("x4-core started", version="0.1.0")
+events.emit("runtime.ready", {"version": "0.1.0"})
 
-print(perm.check("agent", "filesystem.read", "./workspace"))
-# PermissionResult(allowed=True, reason='granted')
+allowed = Permission.check(
+    actor="agent",
+    action="filesystem.write",
+    resource="./workspace"
+)
+print("Write allowed:", allowed)
 ```
 
 ## Architecture
@@ -47,42 +49,52 @@ See [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ```
 x4-core
-├── Config          typed configuration
-├── Logger          structured logging
-├── EventBus        in-process pub/sub
-└── Permission      least-privilege checks
-```
-
-Higher packages (x4-agents, x4-ai, x4-sandbox …) depend on x4-core.
-x4-core never depends on them.
-
-## Development
-
-```bash
-pip install -e ".[dev]"
-ruff check .
-pytest -q
+├── packages/
+│   ├── config/
+│   ├── logger/
+│   ├── errors/
+│   ├── events/
+│   ├── telemetry/
+│   ├── auth/
+│   ├── permissions/
+│   ├── plugins/
+│   └── runtime/
+├── schemas/
+├── adapters/
+├── tests/
+├── examples/
+└── docs/
 ```
 
 ## Related projects
 
 | Project | Role |
 |---------|------|
-| [x4-agents](https://github.com/dhe-cruzer69/x4-agents) | Flagship agent runtime |
-| [x4-ai](https://github.com/dhe-cruzer69/x4-ai) | Provider-agnostic AI |
-| [x4-memory](https://github.com/dhe-cruzer69/x4-memory) | Local-first memory |
-| [x4-sandbox](https://github.com/dhe-cruzer69/x4-sandbox) | Sandboxed execution |
-| [x4-mcp-gateway](https://github.com/dhe-cruzer69/x4-mcp-gateway) | Secure MCP gateway |
-| [x4-research](https://github.com/dhe-cruzer69/x4-research) | Evidence-first research |
-
-## License
-
-Apache-2.0
+| [x4-agents](https://github.com/dhe-cruzer69/x4-agents) | Flagship secure multi-agent runtime |
+| [x4-ai](https://github.com/dhe-cruzer69/x4-ai) | Provider-agnostic AI layer |
+| [x4-memory](https://github.com/dhe-cruzer69/x4-memory) | Local-first agent memory |
+| [x4-sandbox](https://github.com/dhe-cruzer69/x4-sandbox) | Sandboxed tool execution |
+| [x4-mcp-gateway](https://github.com/dhe-cruzer69/x4-mcp-gateway) | Policy-controlled MCP gateway |
+| [x4-research](https://github.com/dhe-cruzer69/x4-research) | Evidence-first research engine |
 
 ## Security
 
-See [SECURITY.md](SECURITY.md).
+See [SECURITY.md](SECURITY.md). Report vulnerabilities privately.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+## Roadmap
+
+See [ROADMAP.md](ROADMAP.md).
+
+## License
+
+Apache-2.0 — see [LICENSE](LICENSE).
 
 ## Support
 
-[GitHub Sponsors](https://github.com/sponsors/dhe-cruzer69)
+If x4-core or the wider X4 ecosystem is useful to you, consider supporting continued development:
+
+**[GitHub Sponsors → dhe-cruzer69](https://github.com/sponsors/dhe-cruzer69)**

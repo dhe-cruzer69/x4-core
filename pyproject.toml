@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "Apache-2.0"}
 authors = [{name = "ARIEX4Ops", email = ""}]
-keywords = ["x4", "agents", "infrastructure", "runtime"]
+keywords = ["x4", "agents", "runtime", "infrastructure", "ai"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -24,7 +24,7 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=7.0", "ruff>=0.1", "mypy>=1.0"]
+dev = ["ruff", "pytest", "mypy"]
 
 [project.urls]
 Homepage = "https://github.com/dhe-cruzer69/x4-core"
@@ -34,10 +34,9 @@ Issues = "https://github.com/dhe-cruzer69/x4-core/issues"
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["src"]
-
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
