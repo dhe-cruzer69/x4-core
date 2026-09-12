@@ -2,44 +2,73 @@
 
 **Core runtime and shared infrastructure for the X4 open-source ecosystem.**
 
-Provides the foundational primitives used by every other X4 project:
-
-- Configuration
-- Structured logging
-- Event bus
-- Telemetry
-- Authentication / Authorization primitives
-- Permission model
-- Plugin system
-- Shared schemas & adapters
+Shared primitives used by every X4 project: configuration, logging, events, telemetry, authentication, permissions, plugins, and schemas.
 
 ## Status
 
-Early foundation (v0.1). Architecture and public API are stabilizing.
+Early foundation (v0.1.0-dev). Designed to be the boring, reliable base layer so agent, AI, memory, MCP and sandbox projects do not re-implement infrastructure.
 
-## Quick start (planned)
+## Goals
 
-```python
-from x4.core import X4
+- Type-safe configuration and validation
+- Structured logging + event bus
+- Permission and policy primitives
+- Plugin loading and lifecycle
+- Telemetry hooks (no vendor lock-in)
+- Zero business logic (agents live elsewhere)
 
-x4 = X4()
-x4.config.load()
-x4.logger.info("agent started")
-x4.events.emit("task.created", {"task_id": "123"})
-x4.permissions.check(actor="agent", action="filesystem.write")
+## Quick Start
+
+```bash
+pip install -e ".[dev]"   # once packaging is complete
 ```
 
-## Related
+```python
+from x4.core import Config, Logger, EventBus, Permission
 
-- [x4-agents](https://github.com/dhe-cruzer69/x4-agents) — flagship agent runtime
-- [x4-ai](https://github.com/dhe-cruzer69/x4-ai)
-- [x4-memory](https://github.com/dhe-cruzer69/x4-memory)
-- [x4-sandbox](https://github.com/dhe-cruzer69/x4-sandbox)
+config = Config.load()
+logger = Logger(name="x4")
+bus = EventBus()
 
-## License
+bus.emit("runtime.started", {"version": "0.1.0"})
+logger.info("x4-core ready")
+```
 
-MIT (see LICENSE)
+## Architecture
+
+```
+x4-core/
+├── packages/
+│   ├── config/
+│   ├── logging/
+│   ├── events/
+│   ├── telemetry/
+│   ├── auth/
+│   ├── permissions/
+│   ├── plugins/
+│   └── schemas/
+├── adapters/
+├── tests/
+├── examples/
+└── docs/
+```
 
 ## Security
 
-See [SECURITY.md](SECURITY.md)
+See [SECURITY.md](SECURITY.md). Report vulnerabilities privately.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+Apache-2.0 (see LICENSE).
+
+## Roadmap
+
+See [ROADMAP.md](ROADMAP.md).
+
+---
+
+Part of the [X4 ecosystem](https://github.com/dhe-cruzer69) by ARIEX4Ops.

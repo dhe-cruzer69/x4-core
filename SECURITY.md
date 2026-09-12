@@ -2,20 +2,26 @@
 
 ## Supported Versions
 
-| Version | Supported |
-|---------|-----------|
-| 0.x     | Yes (active development) |
+| Version | Supported          |
+| ------- | ------------------ |
+| 0.1.x   | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
-Please report security issues privately via GitHub Security Advisories or by contacting the maintainers.
+Please report security vulnerabilities privately.
 
-Do **not** open public issues for vulnerabilities that could be exploited.
+- Do **not** open a public issue for security problems.
+- Preferred: open a private security advisory on this repository, or contact the maintainers via the profile contact methods.
 
-## Security Principles (X4)
+We aim to acknowledge reports within 72 hours and provide a remediation timeline as soon as the issue is confirmed.
 
-- Least privilege for all agent actions
-- Explicit approval gates for high-risk operations
-- Immutable audit logs
-- No unrestricted production credentials for autonomous agents
-- Dependency and secret scanning in CI
+## Scope
+
+x4-core provides shared primitives (config, logging, events, permissions, plugins). Security-sensitive areas include:
+
+- Permission evaluation correctness
+- Plugin loading isolation
+- Configuration secret handling
+- Telemetry data leakage
+
+Agent-level execution, sandboxing, and MCP tool policy live in sibling projects (`x4-agents`, `x4-sandbox`, `x4-mcp-gateway`).

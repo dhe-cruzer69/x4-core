@@ -1,22 +1,31 @@
 # Contributing to x4-core
 
-Thank you for your interest in contributing to the X4 ecosystem.
+Thank you for your interest in contributing.
 
-## Development
+## Development setup
 
-1. Fork the repository
-2. Create a feature branch
-3. Make changes with tests
-4. Ensure CI passes
-5. Open a Pull Request
+```bash
+git clone https://github.com/dhe-cruzer69/x4-core.git
+cd x4-core
+python -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+```
 
-## Standards
+## Guidelines
 
-- Type-safe code preferred
-- Unit + integration tests for new features
-- Update documentation and CHANGELOG
-- Follow existing architecture patterns
+- Keep the core free of agent-specific or provider-specific logic.
+- Prefer small, focused PRs.
+- Add tests for new public APIs.
+- Update docs and CHANGELOG for user-visible changes.
+- Follow the existing code style (ruff + mypy once configured).
+
+## Pull requests
+
+1. Fork and create a feature branch.
+2. Ensure tests and lint pass.
+3. Open a PR with a clear description of the change and motivation.
 
 ## Code of Conduct
 
-Be respectful. Focus on constructive technical discussion.
+Be respectful. Harassment or discrimination is not tolerated.
