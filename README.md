@@ -1,28 +1,36 @@
 # x4-core
 
-**Core runtime and shared infrastructure for the X4 open-source ecosystem**
+**Core runtime and shared infrastructure for the X4 open-source ecosystem.**
 
-Provides the common primitives used by every X4 project: configuration, logging, events, telemetry, authentication, permissions, plugins and schemas.
+Config • Logging • Events • Telemetry • Auth • Permissions • Plugins • Schemas
+
+Part of [ARIEX4Ops / X4](https://github.com/dhe-cruzer69).
 
 ## Status
 
-Early foundation (v0.1). API is experimental and will evolve.
+Early foundation (v0.1.x). API is experimental and may change.
 
-## Install (planned)
+## Installation
 
 ```bash
-pip install x4-core
-# or
-npm install @x4/core
+pip install x4-core   # or: pip install -e .
 ```
 
-## Design Goals
+## Quick start
 
-- Type-safe, minimal surface area
-- Zero heavy dependencies where possible
-- Explicit configuration over magic
-- Observability built-in
-- Plugin system for extension
+```python
+from x4.core import Config, Logger, EventBus, Permission
+
+config = Config.load()
+logger = Logger("x4")
+events = EventBus()
+
+logger.info("x4-core started")
+events.emit("runtime.ready", {"version": "0.1.0"})
+
+# Permission check example
+allowed = Permission.check(actor="agent", action="filesystem.write", resource="./workspace")
+```
 
 ## Architecture
 
@@ -31,28 +39,34 @@ x4-core/
 ├── packages/
 │   ├── config/
 │   ├── logging/
-│   ├── errors/
 │   ├── events/
 │   ├── telemetry/
 │   ├── auth/
 │   ├── permissions/
-│   └── plugins/
-├── schemas/
+│   ├── plugins/
+│   └── schemas/
 ├── adapters/
 ├── tests/
+├── examples/
 └── docs/
 ```
 
-## Related
+## Related projects
 
-- [x4-agents](https://github.com/dhe-cruzer69/x4-agents) — consumes x4-core
-- [x4-ai](https://github.com/dhe-cruzer69/x4-ai)
-- [x4-memory](https://github.com/dhe-cruzer69/x4-memory)
+- [x4-agents](https://github.com/dhe-cruzer69/x4-agents) — flagship agent runtime
+- [x4-ai](https://github.com/dhe-cruzer69/x4-ai) — provider-agnostic AI layer
+- [x4-memory](https://github.com/dhe-cruzer69/x4-memory) — local-first agent memory
+- [x4-sandbox](https://github.com/dhe-cruzer69/x4-sandbox) — sandboxed tool execution
+- [x4-mcp-gateway](https://github.com/dhe-cruzer69/x4-mcp-gateway) — secure MCP gateway
 
 ## License
 
-Apache-2.0 (or MIT — final decision pending)
+Apache-2.0
 
 ## Security
 
 See [SECURITY.md](SECURITY.md). Report vulnerabilities privately.
+
+## Support
+
+[GitHub Sponsors](https://github.com/sponsors/dhe-cruzer69)
