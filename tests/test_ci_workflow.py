@@ -1,5 +1,5 @@
-from pathlib import Path
 import re
+from pathlib import Path
 
 
 def test_ci_workflow_fails_closed_on_lint_and_test_errors() -> None:
