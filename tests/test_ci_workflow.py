@@ -2,17 +2,18 @@ import re
 from pathlib import Path
 
 
+def _workflow() -> str:
+    path = Path(__file__).resolve().parents[1] / ".github" / "workflows" / "ci.yml"
+    return path.read_text(encoding="utf-8")
+
+
 def test_ci_workflow_fails_closed_on_lint_and_test_errors() -> None:
     """Require the lint/test steps to run their commands without shell fallbacks."""
-    workflow_path = (
-        Path(__file__).resolve().parents[1] / ".github" / "workflows" / "ci.yml"
-    )
-    workflow = workflow_path.read_text(encoding="utf-8")
+    workflow = _workflow()
 
-    # Match the complete run command attached to each named step. Substring-only
-    # assertions would miss suppressions such as "ruff check . || :".
     for step_name, expected_command in (
         ("Lint", "ruff check ."),
+        ("Typecheck", "mypy src tests"),
         ("Test", "pytest -q"),
     ):
         step = re.search(
@@ -26,3 +27,7 @@ def test_ci_workflow_fails_closed_on_lint_and_test_errors() -> None:
         assert run_command.group(1) == expected_command
 
     assert "continue-on-error: true" not in workflow
+    assert "|| true" not in workflow
+    assert "pull_request_target" not in workflow
+    assert "persist-credentials: false" in workflow
+    assert "contents: read" in workflow
