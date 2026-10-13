@@ -14,7 +14,7 @@ class Config:
     data: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
-    def load(cls, overrides: dict[str, Any] | None = None) -> "Config":
+    def load(cls, overrides: dict[str, Any] | None = None) -> Config:
         """Load config from environment with optional overrides."""
         data: dict[str, Any] = {
             "env": os.getenv("X4_ENV", "development"),
