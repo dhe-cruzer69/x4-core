@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, "fix/**"]
+    branches: [main]
   pull_request:
     branches: [main]
 
@@ -10,13 +10,15 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -24,10 +26,14 @@ jobs:
     env:
       PYTHONUTF8: "1"
       PIP_DISABLE_PIP_VERSION_CHECK: "1"
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 1
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
@@ -36,7 +42,9 @@ jobs:
 
       - name: Install build and development tooling
         run: |
-          python -m pip install --upgrade pip build
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install build
           python -m pip install -e ".[dev]"
 
       - name: Validate installed dependencies
@@ -53,3 +61,31 @@ jobs:
 
       - name: Test
         run: pytest -q
+
+      - name: Reject suppressed commands
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          text = Path(".github/workflows").joinpath("ci.yml").read_text(encoding="utf-8")
+          banned = (
+              "|| true",
+              "|| :",
+              'echo "No tests yet"',
+              "continue-on-error: true",
+              "pull_request_target",
+          )
+          for item in banned:
+              if item in text:
+                  raise SystemExit(f"banned CI pattern: {item}")
+          required = (
+              "persist-credentials: false",
+              "contents: read",
+              "mypy src tests",
+              "ruff check .",
+              "pytest -q",
+          )
+          for item in required:
+              if item not in text:
+                  raise SystemExit(f"missing required CI control: {item}")
+          PY
