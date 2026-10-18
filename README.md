@@ -66,6 +66,28 @@ x4-core
 └── docs/
 ```
 
+<!-- X4-APEX-DIAGRAM-START:x4-core -->
+
+```mermaid
+flowchart TB
+    APP[Application] --> API[Shared X4 APIs]
+    API --> CFG[Config]
+    API --> LOG[Structured Logger]
+    API --> EVT[Event Bus]
+    API --> PERM[Permission Checks]
+    API --> TEL[Telemetry]
+    API --> PLUG[Plugin Registry]
+    CFG --> RT[Runtime Package]
+    EVT --> AUD[Consumer Audit Events]
+    PERM -->|authorize or deny| RT
+    RT --> ERR[Typed Errors and Schemas]
+    AGENTS[x4-agents] -. consumes .-> API
+    AI[x4-ai] -. consumes .-> API
+    MEM[x4-memory] -. consumes .-> API
+```
+
+<!-- X4-APEX-DIAGRAM-END:x4-core -->
+
 ## Related projects
 
 | Project | Role |
