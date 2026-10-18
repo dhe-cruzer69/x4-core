@@ -45,6 +45,29 @@ print("Write allowed:", allowed)
 
 ## Architecture
 
+## APEX Architecture Map
+
+> Status: architecture documentation; implementation and deployment claims require independent verification.
+
+```mermaid
+graph LR
+  App[Calling application] --> Core[x4-core]
+  Core --> Lifecycle[Runtime lifecycle]
+  Core --> Policy[Policy evaluation]
+  Core --> Executor[Executor boundary]
+  Lifecycle --> Policy
+  Policy -->|authorized request only| Executor
+  Executor --> Evidence[Execution evidence]
+  Lifecycle --> RuntimeAPI[Runtime API]
+  Policy --> PolicyAPI[Policy API]
+  Executor --> ExecutorAPI[Executor API]
+  RuntimeAPI --> Beast[x4-beast]
+  PolicyAPI --> Agents[x4-agents]
+  ExecutorAPI --> Sandbox[x4-sandbox]
+```
+**Evidence note:** This is an architecture map to verify against exported symbols and tests; arrows indicate intended integration boundaries, not proof of shipped functionality.
+
+
 See [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ```
