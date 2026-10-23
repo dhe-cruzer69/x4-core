@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
 """60-second example for x4-core."""
 
 from x4 import Config, EventBus, Logger, Permission
+
 
 def main() -> None:
     config = Config.load({"env": "demo"})
