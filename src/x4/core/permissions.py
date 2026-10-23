@@ -15,7 +15,7 @@ class Permission:
     allowed: bool = True
 
     @classmethod
-    def check(cls, actor: str, action: str, resource: str, *, allow: bool = True) -> "Permission":
+    def check(cls, actor: str, action: str, resource: str, *, allow: bool = True) -> Permission:
         """Create a permission decision."""
         return cls(actor=actor, action=action, resource=resource, allowed=allow)
 
