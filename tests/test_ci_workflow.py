@@ -80,7 +80,12 @@ def test_ci_runs_lint_and_tests_as_executable_fail_closed_steps() -> None:
                     f"{gate_name} step has a condition that can skip the gate: "
                     f"{step_condition!r}"
                 )
-                assert job_condition in allowed_conditions, (
+                safe_duplicate_run_guard = (
+                    job_name == "quality"
+                    and job_condition
+                    == "github.event_name != 'push' || github.ref == 'refs/heads/main'"
+                )
+                assert job_condition in allowed_conditions or safe_duplicate_run_guard, (
                     f"job {job_name} has a condition that can skip {gate_name}: "
                     f"{job_condition!r}"
                 )
