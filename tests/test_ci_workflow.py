@@ -18,6 +18,11 @@ def _load_workflow() -> dict[str, Any]:
     return document
 
 
+def _condition(config: dict[str, Any]) -> str:
+    value = config.get("if")
+    return "" if value is None else str(value).strip().lower()
+
+
 def _continue_on_error_is_disabled(config: dict[str, Any]) -> bool:
     if "continue-on-error" not in config:
         return True
@@ -69,8 +74,8 @@ def test_ci_runs_lint_and_tests_as_executable_fail_closed_steps() -> None:
                     f"found {command!r}"
                 )
                 allowed_conditions = {"", "success()", "${{ success() }}"}
-                step_condition = str(step.get("if") or "").strip().lower()
-                job_condition = str(job.get("if") or "").strip().lower()
+                step_condition = _condition(step)
+                job_condition = _condition(job)
                 assert step_condition in allowed_conditions, (
                     f"{gate_name} step has a condition that can skip the gate: "
                     f"{step_condition!r}"
@@ -99,6 +104,10 @@ def test_ci_runs_lint_and_tests_as_executable_fail_closed_steps() -> None:
     if isinstance(gate, dict):
         assert _continue_on_error_is_disabled(gate), (
             "the final gate job must not suppress failures"
+        )
+        gate_condition = _condition(gate)
+        assert gate_condition in {"", "success()", "${{ success() }}"}, (
+            f"the final gate must not bypass failed quality jobs: {gate_condition!r}"
         )
         needs = gate.get("needs") or []
         if isinstance(needs, str):
