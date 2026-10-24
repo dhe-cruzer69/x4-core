@@ -24,7 +24,7 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["ruff", "pytest", "mypy"]
+dev = ["ruff", "pytest", "mypy", "PyYAML>=6,<7"]
 
 [project.urls]
 Homepage = "https://github.com/dhe-cruzer69/x4-core"
